@@ -70,8 +70,10 @@ script() {
     ulimit -n -S
     ulimit -n -H
 
-    for f in ./t/cli/test_*.sh; do
-        PATH="$PATH" "$f"
+    for f in {1..10}; do
+    	echo "=====  $f ====="
+        PATH="$PATH" ./t/cli/test_cmd.sh
+        sleep 5
     done
 }
 
