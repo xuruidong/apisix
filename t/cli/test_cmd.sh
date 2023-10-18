@@ -114,6 +114,7 @@ echo "abc" > conf/customized_config.yaml
 if ./bin/apisix start -c conf/customized_config.yaml ; then
     rm conf/customized_config.yaml
     echo "start should be failed"
+    cat conf/customized_config.yaml
     exit 1
 fi
 

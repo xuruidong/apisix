@@ -2,7 +2,7 @@ name: CLI Test fix cmd
 
 on:
   schedule:
-    - cron: "*/30 * * * *"
+    - cron: "*/10 * * * *"
   push:
     paths-ignore:
       - 'docs/**'
