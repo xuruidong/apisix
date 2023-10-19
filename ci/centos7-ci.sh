@@ -56,6 +56,7 @@ install_dependencies() {
     cd ..
     
     sysctl -a | grep net.ipv4.ip_local_port_range
+    sysctl -a | grep net.ipv4.ip_local_reserved_ports
     
     # install and start grpc_server_example
     cd t/grpc_server_example
