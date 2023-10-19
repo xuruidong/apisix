@@ -74,12 +74,14 @@ install_dependencies() {
 	
     cd ../../
     # wait for grpc_server_example to fully start
-    sleep 1
+	
+	sleep 3
 	ss -anp | grep 5005
-	ps -ef | grep grpc
-	sleep 2
-	ss -anp | grep 5005
-	cat grpc_server_example.log
+	GRPC_PROC=`ps -ef | grep grpc | grep -v grep`
+	echo $GRPC_PROC
+	if [[ $GRPC_PROC == "" ]];then 
+		cat grpc_server_example.log
+	fi
 	exit 0
 
     # installing grpcurl
