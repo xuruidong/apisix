@@ -27,7 +27,7 @@ install_dependencies() {
         epel-release >/dev/null
 
     # install newer curl
-    yum makecache
+    yum makecache > /dev/null
     yum install -y libnghttp2-devel > /dev/null
     install_curl > /dev/null
 
@@ -66,9 +66,9 @@ install_dependencies() {
 	if [ $? != 0 ];then
 		cat grpc_server_example.log
 		sleep 1
-	    ss -anp | grep 5005
+	    ss -antp | grep 5005
 	    sleep 2
-	    ss -anp | grep 5005
+	    ss -antp | grep 5005
 	    exit 1
 	fi
 	
@@ -76,7 +76,7 @@ install_dependencies() {
     # wait for grpc_server_example to fully start
 	
 	sleep 3
-	ss -anp | grep 5005
+	ss -antp | grep 5005
 	GRPC_PROC=`ps -ef | grep grpc | grep -v grep`
 	#echo $GRPC_PROC
 	if [[ $GRPC_PROC == "" ]];then 
