@@ -10,6 +10,6 @@ do
     git push
     echo $DATE
     i=$[$i+1]
-    sleep 1100
+    sleep 450
 done
 

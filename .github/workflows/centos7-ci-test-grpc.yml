@@ -1,9 +1,8 @@
 name: CI Centos7 TEST grpc
 
 on:
-  schedule:
-    - cron: "*/15 * * * *"
   push:
+    branches: [master, 'release/**']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
