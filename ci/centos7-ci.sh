@@ -78,7 +78,7 @@ install_dependencies() {
 	sleep 3
 	ss -anp | grep 5005
 	GRPC_PROC=`ps -ef | grep grpc | grep -v grep`
-	echo $GRPC_PROC
+	#echo $GRPC_PROC
 	if [[ $GRPC_PROC == "" ]];then 
 		cat grpc_server_example.log
 		exit 1
