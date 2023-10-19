@@ -54,6 +54,9 @@ install_dependencies() {
     cd build-cache/ && wget -q https://golang.org/dl/go1.17.linux-amd64.tar.gz && tar -xf go1.17.linux-amd64.tar.gz
     export PATH=$PATH:$(pwd)/go/bin
     cd ..
+    
+    sysctl -a | grep net.ipv4.ip_local_port_range
+    
     # install and start grpc_server_example
     cd t/grpc_server_example
 
