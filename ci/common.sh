@@ -62,7 +62,7 @@ install_curl () {
     wget https://curl.se/download/curl-${CURL_VERSION}.tar.gz
     tar -xzvf curl-${CURL_VERSION}.tar.gz
     cd curl-${CURL_VERSION}
-    ./configure --prefix=/usr/local --with-openssl --with-nghttp2
+    ./configure --prefix=/usr/local --with-openssl --with-nghttp2  > /dev/null
     make
     sudo make install
     sudo ldconfig

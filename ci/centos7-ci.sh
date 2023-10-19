@@ -61,11 +61,23 @@ install_dependencies() {
     ./grpc_server_example \
         -grpc-address :50051 -grpcs-address :50052 -grpcs-mtls-address :50053 -grpc-http-address :50054 \
         -crt ../certs/apisix.crt -key ../certs/apisix.key -ca ../certs/mtls_ca.crt \
-        > grpc_server_example.log 2>&1 || (cat grpc_server_example.log && exit 1)&
+        > grpc_server_example.log 2>&1 &
 
+	if [ $? != 0 ];then
+		cat grpc_server_example.log
+		sleep 1
+	    ss -anp | grep 5005
+	    sleep 2
+	    ss -anp | grep 5005
+	    exit 1
+	fi
+	
     cd ../../
     # wait for grpc_server_example to fully start
     sleep 3
+	ss -anp | grep 5005
+	ps -ef | grep grpc
+	exit 0
 
     # installing grpcurl
     install_grpcurl
