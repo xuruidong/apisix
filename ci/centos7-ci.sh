@@ -32,7 +32,7 @@ install_dependencies() {
     install_curl > /dev/null
 
     # install openresty to make apisix's rpm test work
-    yum install -y yum-utils && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo > /dev/null
+    yum install -y yum-utils && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo > /dev/null 2>&1
     yum install -y openresty-1.21.4.2 openresty-debug-1.21.4.2 openresty-openssl111-debug-devel pcre pcre-devel > /dev/null
 
     # install luarocks
