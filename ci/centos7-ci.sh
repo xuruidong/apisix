@@ -32,8 +32,8 @@ install_dependencies() {
     install_curl > /dev/null
 
     # install openresty to make apisix's rpm test work
-    yum install -y yum-utils && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo
-    yum install -y openresty-1.21.4.2 openresty-debug-1.21.4.2 openresty-openssl111-debug-devel pcre pcre-devel
+    yum install -y yum-utils && yum-config-manager --add-repo https://openresty.org/package/centos/openresty.repo > /dev/null
+    yum install -y openresty-1.21.4.2 openresty-debug-1.21.4.2 openresty-openssl111-debug-devel pcre pcre-devel > /dev/null
 
     # install luarocks
     ./utils/linux-install-luarocks.sh
@@ -45,7 +45,7 @@ install_dependencies() {
     install_vault_cli
 
     # install test::nginx
-    yum install -y cpanminus perl
+    yum install -y cpanminus perl > /dev/null
     cpanm --notest Test::Nginx IPC::Run > build.log 2>&1 || (cat build.log && exit 1)
 
     # add go1.15 binary to the path
@@ -74,9 +74,12 @@ install_dependencies() {
 	
     cd ../../
     # wait for grpc_server_example to fully start
-    sleep 3
+    sleep 1
 	ss -anp | grep 5005
 	ps -ef | grep grpc
+	sleep 2
+	ss -anp | grep 5005
+	cat grpc_server_example.log
 	exit 0
 
     # installing grpcurl
