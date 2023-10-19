@@ -81,6 +81,7 @@ install_dependencies() {
 	echo $GRPC_PROC
 	if [[ $GRPC_PROC == "" ]];then 
 		cat grpc_server_example.log
+		exit 1
 	fi
 	exit 0
 
