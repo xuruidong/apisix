@@ -62,3 +62,4 @@ fi
 echo "passed: apisix_mirror_on_demand is on when running on apisix-base"
 sleep 0
 sleep 0
+sleep 0
