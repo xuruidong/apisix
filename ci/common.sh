@@ -59,7 +59,7 @@ rerun_flaky_tests() {
 
 install_curl () {
     CURL_VERSION="7.88.0"
-    wget https://curl.se/download/curl-${CURL_VERSION}.tar.gz
+    wget -q https://curl.se/download/curl-${CURL_VERSION}.tar.gz
     tar -xzvf curl-${CURL_VERSION}.tar.gz
     cd curl-${CURL_VERSION}
     ./configure --prefix=/usr/local --with-openssl --with-nghttp2  > /dev/null
