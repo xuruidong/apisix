@@ -1,6 +1,6 @@
 #!/bin/bash
 
-i=1
+i=2
 while true
 do
     DATE=`date "+%Y-%m-%d %H:%M:%S"`
