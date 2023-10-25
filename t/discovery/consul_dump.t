@@ -507,3 +507,8 @@ GET /t
 {"service_a":[{"host":"127.0.0.1","port":30511,"weight":1}]}
 --- no_error_log
 [error]
+--- exec
+docker logs consul_1
+--- exec 
+cat /usr/local/apisix/logs/error.log
+
