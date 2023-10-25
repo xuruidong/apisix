@@ -87,7 +87,6 @@ install_dependencies() {
 		cat grpc_server_example.log
 		exit 1
 	fi
-	exit 0
 
     # installing grpcurl
     install_grpcurl
