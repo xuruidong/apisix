@@ -471,6 +471,8 @@ location /v1/agent {
 --- response_body eval
 --- error_code eval
 [200, 200, 200, 200, 200, 200]
+--- no_error_log
+[error]
 
 
 
@@ -491,7 +493,7 @@ discovery:
         content_by_lua_block {
             local json = require("toolkit.json")
             local t = require("lib.test_admin")
-            ngx.sleep(2)
+            ngx.sleep(1)
             local code, body, res = t.test('/v1/discovery/consul/show_dump_file',
                 ngx.HTTP_GET)
             local entity = json.decode(res)
@@ -503,3 +505,5 @@ discovery:
 GET /t
 --- response_body
 {"service_a":[{"host":"127.0.0.1","port":30511,"weight":1}]}
+--- no_error_log
+[error]
