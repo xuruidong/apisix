@@ -493,7 +493,7 @@ discovery:
         content_by_lua_block {
             local json = require("toolkit.json")
             local t = require("lib.test_admin")
-            ngx.sleep(1)
+            ngx.sleep(0.5)
             local code, body, res = t.test('/v1/discovery/consul/show_dump_file',
                 ngx.HTTP_GET)
             local entity = json.decode(res)
