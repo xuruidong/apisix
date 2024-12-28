@@ -157,7 +157,7 @@ function plugin_consumer()
                     }
                 end
 
-                local consumer, err = consumers_id_lrucache(val.value.id,
+                local consumer, _ = consumers_id_lrucache(val.value.id,
                         val.modifiedIndex, construct_consumer_data, val, config)
                 if consumer == nil then
                     goto CONTINUE
@@ -235,7 +235,7 @@ function create_consume_cache(consumers_conf, key_attr)
         core.log.info("consumer node: ", core.json.delay_encode(consumer))
         local new_consumer = consumer_lrucache(consumer, nil,
                                 fill_consumer_secret, consumer)
-        consumer_names[consumer.auth_conf[key_attr]] = new_consumer
+        consumer_names[new_consumer.auth_conf[key_attr]] = new_consumer
     end
 
     return consumer_names
