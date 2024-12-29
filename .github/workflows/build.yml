@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master, 'release/**', cache-fix-ci]
+    branches: [master, 'release/**']
     paths-ignore:
       - 'docs/**'
       - '**/*.md'

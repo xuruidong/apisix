@@ -176,6 +176,8 @@ plugins:
 --- response_body
 done
 true
+--- exec 
+ls /usr/local/apisix/logs/
 
 
 
