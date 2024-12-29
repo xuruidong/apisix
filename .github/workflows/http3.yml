@@ -34,8 +34,8 @@ jobs:
         test_dir:
           #- t/http3/admin
           #- t/plugin/[a-k]*
-          - t/plugin/[l-z]*
-          #- t/plugin/log-rotate.t
+          #- t/plugin/[l-z]*
+          - t/plugin/log-rotate.t
           #- t/admin t/cli t/config-center-yaml t/control t/core t/debug t/discovery t/error_page t/misc
           #- t/node t/pubsub t/router t/script t/secret t/stream-node t/utils t/wasm t/xds-library t/xrpc
 
