@@ -166,12 +166,17 @@ plugins:
                 if string.match(file_name, "__error.log$") then
                     n_split_error_file = n_split_error_file + 1
                 end
-                ngx.say(file_name)
+                -- ngx.say(file_name)
             end
 
             -- Before hot reload, the log rotate may or may not take effect.
             -- It depends on the time we start the test
             ngx.say(n_split_error_file <= 1)
+            if n_split_error_file > 1 then
+            	for file_name in lfs.dir(ngx.config.prefix() .. "/logs/") do
+	                ngx.say(file_name)
+	            end
+			end
             -- core.log.error("eee", os.execute("ls " .. ngx.config.prefix() .. "/logs/"))
         }
     }
@@ -182,15 +187,8 @@ true
 
 
 
+
 === TEST 5: check file changes (disable compression)
---- exec
-ls /usr/local/apisix/logs/
---- response_body eval
-qr/.*/
-
-
-
-=== TEST 6: check file changes (disable compression)
 --- config
     location /t {
         content_by_lua_block {
