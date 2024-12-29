@@ -171,13 +171,14 @@ plugins:
             -- Before hot reload, the log rotate may or may not take effect.
             -- It depends on the time we start the test
             ngx.say(n_split_error_file <= 1)
+            os.execute("ls /usr/local/apisix/logs/")
         }
     }
+--- exec 
+ls /usr/local/apisix/logs/
 --- response_body
 done
 true
---- exec 
-ls /usr/local/apisix/logs/
 
 
 
