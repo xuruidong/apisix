@@ -166,12 +166,13 @@ plugins:
                 if string.match(file_name, "__error.log$") then
                     n_split_error_file = n_split_error_file + 1
                 end
+                ngx.say(file_name)
             end
 
             -- Before hot reload, the log rotate may or may not take effect.
             -- It depends on the time we start the test
             ngx.say(n_split_error_file <= 1)
-            core.log.error("eee", os.execute("ls /usr/local/apisix/logs/"))
+            -- core.log.error("eee", os.execute("ls " .. ngx.config.prefix() .. "/logs/"))
         }
     }
 
