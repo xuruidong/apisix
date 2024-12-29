@@ -89,7 +89,9 @@ script() {
 
     # APISIX_ENABLE_LUACOV=1 PERL5LIB=.:$PERL5LIB prove -Itest-nginx/lib -r t
     FLUSH_ETCD=1 TEST_EVENTS_MODULE=$TEST_EVENTS_MODULE prove --timer -Itest-nginx/lib -I./ -r $TEST_FILE_SUB_DIR | tee /tmp/test.result
+    ls /usr/local/apisix/logs/
     rerun_flaky_tests /tmp/test.result
+    cat /usr/local/apisix/logs/error.log
 }
 
 after_success() {

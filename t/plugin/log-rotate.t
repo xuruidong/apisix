@@ -184,7 +184,7 @@ true
 
 
 === TEST 5: check file changes (disable compression)
---- exec 
+--- exec
 ls /usr/local/apisix/logs/
 --- response_body eval
 qr/.*error.log.*/
