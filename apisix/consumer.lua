@@ -157,7 +157,7 @@ function plugin_consumer()
                     }
                 end
 
-                local consumer, _ = consumers_id_lrucache(val.value.id .. name,
+                local consumer = consumers_id_lrucache(val.value.id .. name,
                         val.modifiedIndex, construct_consumer_data, val, config)
                 if consumer == nil then
                     goto CONTINUE
