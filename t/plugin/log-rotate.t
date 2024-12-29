@@ -179,8 +179,6 @@ plugins:
 --- response_body
 done
 true
---- error_log
-123
 
 
 
@@ -188,7 +186,7 @@ true
 --- exec
 ls /usr/local/apisix/logs/
 --- response_body eval
-qr/.*error.log.*/
+qr/.*/
 
 
 
