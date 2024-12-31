@@ -222,7 +222,8 @@ do
         })
 
 local function fill_consumer_secret(consumer)
-    local new_consumer = core.table.clone(consumer)
+    -- local new_consumer = core.table.clone(consumer)
+    local new_consumer = consumer
     new_consumer.auth_conf = secret.fetch_secrets(new_consumer.auth_conf, false)
     return new_consumer
 end
