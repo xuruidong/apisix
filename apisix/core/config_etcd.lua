@@ -742,7 +742,8 @@ local function sync_data(self)
 
         -- avoid space waste
         if self.sync_times > 100 then
-            local pre = 1, cur = 1
+            local pre = 1
+            local cur = 1
             table.clear(self.values_hash)
             log.info("clear stale data in `values_hash` for key: ", key)
             for _,v in ipairs(self.values) do
