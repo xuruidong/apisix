@@ -746,8 +746,7 @@ local function sync_data(self)
             local cur = 1
             table.clear(self.values_hash)
             log.info("clear stale data in `values_hash` for key: ", key)
-            for _,v in ipairs(self.values) do
-                local val = self.values[cur]
+            for _,val in ipairs(self.values) do
                 if val then
                     self.values[pre] = val
                     key = short_key(self, val.key)
