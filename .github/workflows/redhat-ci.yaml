@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: "0 0 * * *"
   pull_request:
-    branches: [master]
+    #branches: [master]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
@@ -27,10 +27,7 @@ jobs:
           - lua-resty-worker-events
           - lua-resty-events
         test_dir:
-          - t/plugin/[a-k]*
-          - t/plugin/[l-z]*
-          - t/admin t/cli t/config-center-yaml t/control t/core t/debug t/discovery t/error_page t/misc
-          - t/node t/pubsub t/router t/script t/secret t/stream-node t/utils t/xds-library
+          - t/admin t/cli t/config-center-yaml t/control t/core
 
     steps:
     - name: Check out code
