@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master, 'release/**', print_traceback]
+    branches: [master, 'release/**', print_traceback_test]
     paths-ignore:
       - 'docs/**'
       - '**/*.md'
