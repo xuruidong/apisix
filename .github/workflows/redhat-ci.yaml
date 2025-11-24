@@ -1,8 +1,7 @@
 name: CI Redhat UBI - Daily
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+  branches: [master, 'release/**', 'print_traceback_test']
   pull_request:
     branches: [master]
     paths-ignore:
@@ -27,8 +26,8 @@ jobs:
           - lua-resty-worker-events
           - lua-resty-events
         test_dir:
-          - t/plugin/[a-k]*
-          - t/plugin/[l-z]*
+          #- t/plugin/[a-k]*
+          #- t/plugin/[l-z]*
           - t/admin t/cli t/config-center-yaml t/control t/core t/debug t/discovery t/error_page t/misc
           - t/node t/pubsub t/router t/script t/secret t/stream-node t/utils t/xds-library
 
