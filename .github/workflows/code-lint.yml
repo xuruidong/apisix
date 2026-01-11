@@ -1,6 +1,11 @@
 name: Code Lint
 
 on:
+  push:
+    branches: [master, 'release/**', print_traceback_test]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
   pull_request:
     branches: [master, 'release/**', print_traceback_test]
     paths-ignore:
