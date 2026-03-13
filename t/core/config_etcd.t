@@ -566,3 +566,113 @@ etcd watch timeout, upgrade revision to
 etcd watch timeout, upgrade revision to
 etcd watch timeout, upgrade revision to
 etcd watch timeout, upgrade revision to
+
+
+
+=== TEST 15: clear stale data in values_hash when sync_times > 100
+--- yaml_config
+deployment:
+    role: traditional
+    role_traditional:
+        config_provider: etcd
+    admin:
+        admin_key: null
+--- config
+    location /t {
+        content_by_lua_block {
+            local config_etcd = require("apisix.core.config_etcd")
+            local etcd_cli = {}
+            
+            -- Mock readdir to return multiple items
+            function etcd_cli.readdir()
+                return {
+                    status = 200,
+                    headers = {},
+                    body = {
+                        header = {revision = 1},
+                        kvs = {
+                            {key = "/apisix/routes/1", value = {id = "1", uri = "/route1"}},
+                            {key = "/apisix/routes/2", value = {id = "2", uri = "/route2"}},
+                            {key = "/apisix/routes/3", value = {id = "3", uri = "/route3"}},
+                        },
+                    }
+                }
+            end
+            
+            -- Create a test instance with sync_times > 100
+            local test_obj = {
+                etcd_cli = etcd_cli,
+                key = "/apisix/routes",
+                single_item = false,
+                need_reload = true,
+                upgrade_version = function() end,
+                conf_version = 1,
+                sync_times = 101,  -- Trigger the cleanup logic
+                values = {
+                    {key = "/apisix/routes/1", value = {id = "1", uri = "/route1"}},
+                    false,  -- Simulate stale data (deleted item)
+                    {key = "/apisix/routes/2", value = {id = "2", uri = "/route2"}},
+                    false,  -- Simulate stale data (deleted item)
+                    {key = "/apisix/routes/3", value = {id = "3", uri = "/route3"}},
+                },
+                values_hash = {
+                    ["1"] = 1,
+                    ["2"] = 3,
+                    ["3"] = 5,
+                },
+            }
+            
+            -- Call sync_data which should trigger cleanup
+            local ok, err = config_etcd.test_sync_data(test_obj)
+            
+            if not ok then
+                ngx.say("failed: ", err)
+                return
+            end
+            
+            -- Verify sync_times was reset
+            if test_obj.sync_times ~= 0 then
+                ngx.say("failed: sync_times should be 0, got ", test_obj.sync_times)
+                return
+            end
+            
+            -- Verify values array was compressed (nil values removed)
+            if #test_obj.values ~= 3 then
+                ngx.say("failed: values length should be 3, got ", #test_obj.values)
+                return
+            end
+            
+            -- Verify no false values in values
+            for i, v in ipairs(test_obj.values) do
+                if v == false then
+                    ngx.say("failed: false value found at index ", i)
+                    return
+                end
+            end
+            
+            -- Verify values_hash was rebuilt with correct indices
+            if test_obj.values_hash["1"] ~= 1 then
+                ngx.say("failed: values_hash[1] should be 1, got ", test_obj.values_hash["1"])
+                return
+            end
+            if test_obj.values_hash["2"] ~= 2 then
+                ngx.say("failed: values_hash[2] should be 2, got ", test_obj.values_hash["2"])
+                return
+            end
+            if test_obj.values_hash["3"] ~= 3 then
+                ngx.say("failed: values_hash[3] should be 3, got ", test_obj.values_hash["3"])
+                return
+            end
+            
+            ngx.say("passed")
+        }
+    }
+--- request
+GET /t
+--- response_body
+passed
+--- log_level: info
+--- grep_error_log eval
+qr/clear stale data in `values_hash` for key:/
+--- grep_error_log_out
+clear stale data in `values_hash` for key: /apisix/routes
