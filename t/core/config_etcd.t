@@ -582,7 +582,7 @@ deployment:
         content_by_lua_block {
             local config_etcd = require("apisix.core.config_etcd")
             local etcd_cli = {}
-            
+
             -- Mock readdir to return multiple items
             function etcd_cli.readdir()
                 return {
@@ -598,7 +598,7 @@ deployment:
                     }
                 }
             end
-            
+
             -- Create a test instance with sync_times > 100
             local test_obj = {
                 etcd_cli = etcd_cli,
@@ -621,27 +621,27 @@ deployment:
                     ["3"] = 5,
                 },
             }
-            
+
             -- Call sync_data which should trigger cleanup
             local ok, err = config_etcd.test_sync_data(test_obj)
-            
+
             if not ok then
                 ngx.say("failed: ", err)
                 return
             end
-            
+
             -- Verify sync_times was reset
             if test_obj.sync_times ~= 0 then
                 ngx.say("failed: sync_times should be 0, got ", test_obj.sync_times)
                 return
             end
-            
+
             -- Verify values array was compressed (nil values removed)
             if #test_obj.values ~= 3 then
                 ngx.say("failed: values length should be 3, got ", #test_obj.values)
                 return
             end
-            
+
             -- Verify no false values in values
             for i, v in ipairs(test_obj.values) do
                 if v == false then
@@ -649,7 +649,7 @@ deployment:
                     return
                 end
             end
-            
+
             -- Verify values_hash was rebuilt with correct indices
             if test_obj.values_hash["1"] ~= 1 then
                 ngx.say("failed: values_hash[1] should be 1, got ", test_obj.values_hash["1"])
@@ -663,7 +663,7 @@ deployment:
                 ngx.say("failed: values_hash[3] should be 3, got ", test_obj.values_hash["3"])
                 return
             end
-            
+
             ngx.say("passed")
         }
     }
